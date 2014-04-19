@@ -27,6 +27,10 @@
   cursor: move;
 }
 
+.column.over {
+  border: 2px dashed #000;
+}
+
 .column header {
   color: #fff;
   text-shadow: #000 0 1px;
