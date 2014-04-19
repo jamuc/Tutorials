@@ -19,3 +19,13 @@
  </div>
 </body>
 </html>
+<script type="text/javascript">
+  function handleDragStart(e) {
+    this.style.opacity = '0.4'; // Set opacity to 0.4 on drag start
+  }
+
+  var cols = document.querySelectorAll('#columns .column');
+  [].forEach.call(cols, function(col){
+    col.addEventListener('dragstart', handleDragStart, false);
+  });
+</script>
