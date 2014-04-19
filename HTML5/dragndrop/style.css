@@ -51,5 +51,5 @@
   -webkit-border-top-right-radius: 10px;
   -ms-border-top-right-radius: 10px;
   -moz-border-radius-topright: 10px;
-  border
+  border-top-right-radius: 10px;
 }
