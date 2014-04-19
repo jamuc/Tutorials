@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css" media="all">
+  <title>Progress Upload</title>
+</head>
+<body>
+ <input id="files" type="file" name="files[]">
+ <div id="progress_bar">
+   <div class="percent">0%</div>
+ </div>
+</body>
+</html>
+
+<script type="text/javascript">
+  var reader;
+  var progress = document.querySelector('.percent');
+
+  function errorHandler(evt) {}
+
+  function updateProgress(evt) {
+    if(evt.lengthComputable) {
+      var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+      if(percentLoaded < 100) {
+        progress.style.width = percentLoaded + "%";
+        progress.textContent = percentLoaded + "%";
+      }
+    }
+  }
+
+  function handleFileSelect(e) {
+    progress.style.width = '0%';
+    progress.textContent = '0%';
+
+    reader = new FileReader();
+    reader.onerror = errorHandler;
+    reader.onprogress = updateProgress;
+    reader.onloadstart = function(e) {
+      document.getElementById('progress_bar').className = 'loading';
+    };
+    reader.onload = function(e) {
+      progress.style.width = '100%';
+      progress.textContent = '100%';
+    };
+
+    reader.readAsBinaryString(e.target.files[0]);
+  }
+
+  document.getElementById("files").addEventListener("change", handleFileSelect, false);
+</script>
