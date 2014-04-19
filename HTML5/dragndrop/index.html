@@ -34,8 +34,28 @@
   }
 
   function handleDragOver(e) {
+    if(e.preventDefault) {
+      e.preventDefault(); //Necessary. Stops links behaving as links.
+    }
+
+    e.dataTransfer.dropEffect = 'move';
+    return false; // Good convetion
   }
 
+  function handleDrop(e) {
+    if(e.stopPropagation) {
+      e.stopPropagation(); // stops the browser from re-directing
+    }
+    return false;
+  }
+
+  function handleDragEnd(e) {
+    [].forEach.call(cols, function(col){
+      col.classList.remove('over');
+    });
+
+    this.style.opacity = '1.0';
+  }
 
   var cols = document.querySelectorAll('#columns .column');
   [].forEach.call(cols, function(col){
@@ -43,5 +63,7 @@
     col.addEventListener('dragenter', handleDragEnter, false);
     col.addEventListener('dragover', handleDragOver, false);
     col.addEventListener('dragleave', handleDragLeave, false);
+    col.addEventListener('drop', handleDrop, false);
+    col.addEventListener('dragend', handleDragEnd, false);
   });
 </script>
