@@ -20,8 +20,14 @@
 </body>
 </html>
 <script type="text/javascript">
+  var dragSourceElement = null; // remember the drag source in a global variable
+
   function handleDragStart(e) {
     this.style.opacity = '0.4'; // Set opacity to 0.4 on drag start
+
+    dragSourceElement = this;  
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
   }
 
   function handleDragEnter(e) {
@@ -46,6 +52,11 @@
     if(e.stopPropagation) {
       e.stopPropagation(); // stops the browser from re-directing
     }
+    if(dragSourceElement != this) {
+      dragSourceElement.innerHTML = this.innerHTML;
+
+      this.innerHTML = e.dataTransfer.getData("text/html");
+    }
     return false;
   }
 
@@ -55,6 +66,8 @@
     });
 
     this.style.opacity = '1.0';
+
+    return false;
   }
 
   var cols = document.querySelectorAll('#columns .column');
