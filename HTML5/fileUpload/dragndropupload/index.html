@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="style.css" media="all">
+</head>
+<body>
+  <div id="drop_zone">Drop file here</div>
+  <output id="list"></output>
+</body>
+</html>
+<script type="text/javascript">
+  function handleDragOver(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.style.border = '1px red solid';
+
+    e.dataTransfer.dropEffect = "copy"; 
+  }
+  
+  function handleDrop(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    var files = e.dataTransfer.files;
+    var output = [];
+
+    for(var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || "n/a", ')</li>');
+    }
+
+    document.getElementById("list").innerHTML = "<ul>" + output.join("") + "</ul>";
+  }
+
+  var drop_zone = document.getElementById("drop_zone");
+  drop_zone.addEventListener('dragover', handleDragOver, false);
+  drop_zone.addEventListener('drop', handleDrop, false);
+</script>
